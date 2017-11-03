@@ -1,0 +1,8 @@
+{
+    "path": "/invalid",
+    "httpMethod": "GET",
+    "queryStringParameters": {
+        "password": "kilometrikisatesti",
+        "username": "kilometrikisatesti"
+    }
+}
