@@ -1,0 +1,58 @@
+# Welcome to Serverless!
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+
+service: kilometrikisa-proxy
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpackIncludeModules: true # enable auto including modules
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  memorySize: 128
+  timeout: 7
+  stage: prod
+  region: eu-west-1
+
+functions:
+  kilometrikisa-handler:
+    handler: handler.kilometrikisa
+    events:
+      - http:
+          path: login
+          method: get
+          request:
+            parameters:
+              querystrings:
+                username: true
+                password: true
+      - http:
+          path: user
+          method: get
+          request:
+            parameters:
+              querystrings:
+                username: true
+                password: true
+      - http:
+          path: team
+          method: get
+          request:
+            parameters:
+              querystrings:
+                username: true
+                password: true
+      - http:
+          path: updateLog
+          method: post
+          request:
+            parameters:
+              querystrings:
+                kmDate: true
+                kmAmount: true

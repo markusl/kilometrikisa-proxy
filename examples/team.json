@@ -1,0 +1,8 @@
+{
+    "path": "/team",
+    "httpMethod": "GET",
+    "queryStringParameters": {
+        "password": "kilometrikisatesti",
+        "username": "kilometrikisatesti"
+    }
+}
