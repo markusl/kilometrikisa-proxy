@@ -13,7 +13,9 @@ const handlers = {
   '/user': (username, password, callback) =>
     Kilometrikisa.login(username, password)
       .then((results) => Promise.all([
-        Kilometrikisa.getUserResults(),
+        Kilometrikisa.getUserResults(
+          event.queryStringParameters.contestId,
+          event.queryStringParameters.year),
         Kilometrikisa.getContests()]))
       .then((data) => callback(null, {
         statusCode: 200,
@@ -30,7 +32,11 @@ const handlers = {
       .catch((err) => callback(err, null)),
   '/updateLog': (username, password, callback) =>
     Kilometrikisa.login(username, password)
-      .then((user) => Kilometrikisa.updateLog(event.queryStringParameters.kmDate, event.queryStringParameters.kmAmount))
+      .then((user) =>
+        Kilometrikisa.updateLog(
+              event.queryStringParameters.contestId,
+              event.queryStringParameters.kmDate,
+              event.queryStringParameters.kmAmount))
       .then((results) => callback(null, {
         statusCode: 200,
         body: JSON.stringify({ results: results }),
