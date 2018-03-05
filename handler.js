@@ -11,12 +11,12 @@ const handlers = {
         body: JSON.stringify({ user: user }),
       }))
       .catch((err) => callback(err, null)),
-  '/user': (username, password, callback) =>
+  '/user': (username, password, callback, params) =>
     Kilometrikisa.login(username, password)
       .then((results) => Promise.all([
         Kilometrikisa.getUserResults(
-          event.queryStringParameters.contestId,
-          event.queryStringParameters.year),
+          params.contestId,
+          params.year),
         Kilometrikisa.getContests()]))
       .then((data) => callback(null, {
         statusCode: 200,
@@ -31,13 +31,13 @@ const handlers = {
         body: JSON.stringify({ results: results }),
       }))
       .catch((err) => callback(err, null)),
-  '/updateLog': (username, password, callback) =>
+  '/updateLog': (username, password, callback, params) =>
     Kilometrikisa.login(username, password)
       .then((user) =>
         Kilometrikisa.updateLog(
-              event.queryStringParameters.contestId,
-              event.queryStringParameters.kmDate,
-              event.queryStringParameters.kmAmount))
+              params.contestId,
+              params.kmDate,
+              params.kmAmount))
       .then((results) => callback(null, {
         statusCode: 200,
         body: JSON.stringify({ results: results }),
@@ -51,7 +51,7 @@ module.exports.kilometrikisa = (event, context, callback) => {
   Kilometrikisa.setAxiosCookieJar(new tough.CookieJar());
 
   try {
-    handlers[event.path](username, password, callback);
+    handlers[event.path](username, password, callback, event.queryStringParameters);
   } catch (e) {
     callback(new Error('[404] Not found'));
   }

@@ -3,6 +3,8 @@
     "httpMethod": "GET",
     "queryStringParameters": {
         "password": "kilometrikisatesti",
-        "username": "kilometrikisatesti"
+        "username": "kilometrikisatesti",
+        "year": "2017",
+        "contestId": "22"
     }
 }
