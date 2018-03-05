@@ -1,4 +1,5 @@
 'use strict';
+import 'babel-polyfill';
 import * as Kilometrikisa from 'kilometrikisa';
 import * as tough from 'tough-cookie';
 
