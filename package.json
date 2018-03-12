@@ -28,7 +28,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.3",
     "babel-polyfill": "^6.26.0",
-    "kilometrikisa": "0.5.1",
+    "kilometrikisa": "0.5.3",
     "ramda": "^0.25.0",
     "serverless": "^1.26.1",
     "tough-cookie": "^2.3.4"

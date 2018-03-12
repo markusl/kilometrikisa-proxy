@@ -11,21 +11,27 @@ const handlers = {
         body: JSON.stringify({ user: user }),
       }))
       .catch((err) => callback(err, null)),
-  '/user': (username, password, callback, params) =>
+  '/contests': (username, password, callback) =>
     Kilometrikisa.login(username, password)
-      .then((results) => Promise.all([
-        Kilometrikisa.getUserResults(
-          params.contestId,
-          params.year),
-        Kilometrikisa.getContests()]))
-      .then((data) => callback(null, {
+      .then(() => Kilometrikisa.getContests())
+      .then((contests) => callback(null, {
         statusCode: 200,
-        body: JSON.stringify({ results: data[0], contests: data[1] }),
+        body: JSON.stringify({ contests: contests }),
       }))
       .catch((err) => callback(err, null)),
-  '/team': (username, password, callback) =>
+  '/results': (username, password, callback, params) =>
     Kilometrikisa.login(username, password)
-      .then((user) => Kilometrikisa.fetchTeamResults())
+      .then((results) => Kilometrikisa.getUserResults(
+          params.contestId,
+          params.year))
+      .then((results) => callback(null, {
+        statusCode: 200,
+        body: JSON.stringify({ results: results }),
+      }))
+      .catch((err) => callback(err, null)),
+  '/team': (username, password, callback, params) =>
+    Kilometrikisa.login(username, password)
+      .then((user) => Kilometrikisa.fetchTeamResults({ link: params.teamUrl }))
       .then((results) => callback(null, {
         statusCode: 200,
         body: JSON.stringify({ results: results }),
@@ -51,6 +57,7 @@ module.exports.kilometrikisa = (event, context, callback) => {
   Kilometrikisa.setAxiosCookieJar(new tough.CookieJar());
 
   try {
+    console.log(event);
     handlers[event.path](username, password, callback, event.queryStringParameters);
   } catch (e) {
     callback(new Error('[404] Not found'));

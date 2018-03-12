@@ -33,13 +33,23 @@ functions:
                 username: true
                 password: true
       - http:
-          path: user
+          path: contests
           method: get
           request:
             parameters:
               querystrings:
                 username: true
                 password: true
+      - http:
+          path: results
+          method: get
+          request:
+            parameters:
+              querystrings:
+                username: true
+                password: true
+                contestId: true
+                year: true
       - http:
           path: team
           method: get
@@ -48,11 +58,13 @@ functions:
               querystrings:
                 username: true
                 password: true
+                teamUrl: true
       - http:
           path: updateLog
           method: post
           request:
             parameters:
               querystrings:
+                contestId: true
                 kmDate: true
                 kmAmount: true
