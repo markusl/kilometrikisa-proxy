@@ -16,7 +16,7 @@ const handlers = {
       .then(() => Kilometrikisa.getContests())
       .then((contests) => callback(null, {
         statusCode: 200,
-        body: JSON.stringify({ contests: contests }),
+        body: JSON.stringify(contests),
       }))
       .catch((err) => callback(err, null)),
   '/results': (username, password, callback, params) =>
@@ -26,7 +26,12 @@ const handlers = {
           params.year))
       .then((results) => callback(null, {
         statusCode: 200,
-        body: JSON.stringify({ results: results }),
+        body: JSON.stringify({
+        contest: {
+          contestId: params.contestId,
+          year: params.year,
+        },
+        results: results }),
       }))
       .catch((err) => callback(err, null)),
   '/team': (username, password, callback, params) =>
